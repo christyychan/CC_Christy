@@ -1,21 +1,30 @@
 // DIY Pizza
-
 void setup(){ 
   size(800, 800);
+  fill(0);
+  textSize(20);
+  text("MOUSE PRESS TO START", 0, 30);
 }
 
 //mouse press to start pizza and restart pizza
 void mousePressed(){
   background(random(1,255), random(1,255), random(1,255));
+  String reset = "MOUSE PRESS TO RESET";
+  String topping = "KEY PRESS FOR TOPPINGS";
+  fill(0);
+  textSize(20);
+  text(reset, 0, 30);
+  text(topping, 0, 60);
   //pizza bottom
   fill (240, 214, 111);
-  strokeWeight(20);
+  strokeWeight(40);
   stroke(137, 89, 11);
   ellipse(400, 400, 700, 700);
   
   int position = 400;
   
   //slices
+  strokeWeight(18);
   line(position, position, 162, 162);
   line(position, position, 640, 640);
   line(position, position, 680, 200);
