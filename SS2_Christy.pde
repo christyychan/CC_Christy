@@ -4,6 +4,13 @@ void setup(){
   fill(0);
   textSize(20);
   text("MOUSE PRESS TO START", 0, 30);
+  rectMode(CENTER);
+  fill(85, 56, 2);
+  rect(400, 400, 650, 650);
+  fill(0);
+  textSize(50);
+  text("DIY PIZZA", 300, 400);
+ 
 }
 
 //mouse press to start pizza and restart pizza
