@@ -1,4 +1,4 @@
-// DIY Pizza
+// DIY Pizza by Christy Chan
 void setup(){ 
   size(800, 800);
   fill(0);
@@ -48,7 +48,7 @@ void draw(){
 }
 
 
-//add toppings
+//key pressed to add toppings
 void keyPressed(){
   
   float locationX = random (180, 600);
