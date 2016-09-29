@@ -10,7 +10,6 @@ void setup(){
   fill(0);
   textSize(50);
   text("DIY PIZZA", 300, 400);
- 
 }
 
 //mouse press to start pizza and restart pizza
