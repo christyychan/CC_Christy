@@ -1,4 +1,5 @@
 //Lights Out by Christy Chan
+//All rights to all materials remain courtesy to their respective owners.
 
 PImage scarymovie;
 PImage actionmovie;
@@ -43,7 +44,7 @@ void draw(){
     for (int x = 0; x <780; x+=10){
       for(int y = 0; y < 750; y+=10){
         fill(random(0,255));
-        rect(x, y, 10, 10);
+        rect(x, y, 10, 10);      
       } }
     noStroke();
     fill(75, 50, 12);
@@ -55,7 +56,11 @@ void draw(){
     textSize(40);    
     fill(255);
     text("Click to start the game", 380, 360);
-
+    fill(0);
+    rect(770, 100, 190, 350);
+    fill(180,174,166);
+    ellipse(868, 200, 100, 100);
+    ellipse(868, 350, 100, 100);
   }
   else if (state=="intro"){
     fill(0);
@@ -68,9 +73,18 @@ void draw(){
     textAlign(CENTER);
     textSize(28);
     fill(255);
-    text("We have to help Sophia fall asleep", 380, 300);
-    text("Choose the best movie or show to help her do so", 386, 350);
-    text("Click to continue", 380, 400);
+    text("We have to help Sophia fall asleep", 385, 250);
+    text("Choose the best movie or show to help her do so", 387, 300);
+    fill(153, 245, 193);
+    text("Instruction:", 380, 400);
+    text("Press on the remote or keyboard to choose", 380, 450);
+    fill(255);
+    text("Click to continue", 380, 550);
+    fill(0);
+    rect(770, 100, 190, 350);
+    fill(180,174,166);
+    ellipse(868, 200, 100, 100);
+    ellipse(868, 350, 100, 100);    
   }
   else if (state=="scaryoraction"){
     background (237, 242, 203);
@@ -85,9 +99,7 @@ void draw(){
     image(actionmovie, 360, 110, 260, 320);
     person();
     image(couch, 70, 600, 550, 200);    
-
   }
-
   else if (state=="sequelorcomedy"){
     background (237, 242, 203);
     tv();
@@ -95,7 +107,7 @@ void draw(){
     fill(0);
     textAlign(CENTER);
     textSize(16);
-    text("Sophia is even more awake", 530, 600);
+    text("Sophia is even more awake", 550, 550);
     textSize(12);
     text("3. sequel to scary movie", 850, 250);
     textSize(16);
@@ -104,9 +116,7 @@ void draw(){
     image(comedymovie, 360, 110, 260, 320);    
     person();
     image(couch, 70, 600, 550, 200);
-
-  }
-  
+  } 
   else if (state=="cartoonorreality"){
     background (237, 242, 203);
     tv();
@@ -114,7 +124,7 @@ void draw(){
     textAlign(CENTER);
     textSize(16);
     fill(0);
-    text("Sophia is getting a little sleepy", 530, 600);
+    text("Sophia is getting a little sleepy", 550, 550);
     text("3. cartoon movie", 850, 250);
     image(cartoonmovie, 100, 110, 260, 320);
     text("4. reality movie", 850, 280);
@@ -122,7 +132,6 @@ void draw(){
     person();
     image(couch, 70, 600, 550, 200);
   }  
-  
   else if (state=="sci-fiorromance"){
     background (237, 242, 203);
     tv();
@@ -130,7 +139,7 @@ void draw(){
     fill(255);
     textAlign(CENTER);
     textSize(16);
-    text("Last one...", 530, 600);
+    text("One more...", 550, 550);
     fill(0);
     text("5. sci-fi movie", 850, 250);
     image(scifimovie, 100, 110, 260, 320);    
@@ -138,8 +147,7 @@ void draw(){
     image(romancemovie, 360, 110, 260, 320);        
     person();
     image(couch, 70, 600, 550, 200);
-}
-  
+}  
   else if (state=="historyormystery"){
     background (237, 242, 203);
     tv();
@@ -147,27 +155,25 @@ void draw(){
     fill(0);
     textAlign(CENTER);
     textSize(16);
-    text("Last one...", 530, 600);
+    text("Last one...", 550, 550);
     text("5. mystery movie", 850, 250);
     image(mysterymovie, 100, 110, 260, 320);
     text("6. history movie", 850, 280);
     image(historymovie, 360, 110, 260, 320);    
     person();
-    image(couch, 70, 600, 550, 200);
-    
-  } 
-  
+    image(couch, 70, 600, 550, 200);    
+  }   
   else if (state=="nosleep"){
     background (250, 197, 203);
     textAlign(CENTER);
     textSize(30);
     fill(0);
-    text("Sophia did not go to sleep", width/2, 150);
-    text("Her mom grounded her", width/2, 200);
-    image(madmom, 370, 260, 250, 400);
+    text("Sophia did not go to sleep", width/2, 120);
+    text("Her mom grounded her", width/2, 170);
+    text("Try again?", width/2, 220);
+    image(madmom, 375, 260, 250, 400);
     text("Press the spacebar to restart the game", 630, 700);
-  } 
-  
+  }   
   else if (state=="sleep"){
     background (197, 240, 250);
     textAlign(CENTER);
@@ -188,16 +194,12 @@ void person(){
     fill(245, 175, 89);
     ellipse(350, 530, 100, 100);
     image(hair, 275, 446, 200, 300);
-
 }
 
 void tv(){
     //brown
     fill(75, 50, 12);
     rect(60, 70, 600, 400);
-    //screen
-    fill(0);
-    rect(100, 110, 520, 320);  
 }
 
 void remote(){
