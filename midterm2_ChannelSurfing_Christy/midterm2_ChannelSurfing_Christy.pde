@@ -377,7 +377,7 @@ void draw(){
     textSize(50);
     text("ESPN", 550, 420);
     person();
-    image(couch, 70, 620, 550, 200); 
+    image(couch, 70, 600, 550, 200); 
 }
   else if (state=="nosleep"){
     background (250, 197, 203);
