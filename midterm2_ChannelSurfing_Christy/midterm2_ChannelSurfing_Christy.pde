@@ -396,11 +396,11 @@ void draw(){
     image(censor, 430, 100, 440, 240);
     image(crack, 470, 95, 200, 200);
     textAlign(CENTER);
-    textSize(24);
+    textSize(20);
     fill(0);
     text("Uh oh, Sophia did not go back to sleep", 700, 450);
     text("Her mom got mad at her", 700, 500);
-    text("Help her mom destroy the TV by click on it", 700, 550);
+    text("Help her mom destroy the TV by repeatedly clicking on it", 700, 550);
     image(madmom, 200, 260, 250, 400); 
     
   }
