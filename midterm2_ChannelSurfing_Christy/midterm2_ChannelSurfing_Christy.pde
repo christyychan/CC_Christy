@@ -411,7 +411,10 @@ void draw(){
     fill(0);
     text("Try again?", width/2, 220);
     image(madmom, 200, 260, 250, 400);
-    text("Press the spacebar to restart the game", 630, 700);
+    fill(#4C2FF7);
+    rect(462, 665, 480, 50);
+    fill(random(0,255));
+    text("Click here to restart the game", 700, 700);
   }   
   else if (state=="sleep"){
     background (197, 240, 250);
@@ -420,8 +423,11 @@ void draw(){
     fill(0);
     text("Sophia fell asleep!", width/2, 210);
     text("Good Job!", width/2, 260);
-    image(sleep, 100, 400);
-    text("Press the spacebar to restart the game", 630, 700);
+    image(sleep, 100, 350);
+    fill(#4C2FF7);
+    rect(462, 665, 480, 50);
+    fill(random(0,255));
+    text("Click here to restart the game", 700, 700);
   }
   println(state);
   println(hit);
@@ -700,15 +706,12 @@ void mousePressed(){
   if (state == "destroy" && hit >= 10){
     state = "nosleep";
   }
-
-}
-
-void keyPressed(){
-  if (state == "sleep" && (key == ' ')|| state == "nosleep" && (key == ' ')){
-    //rect
+  if (state == "sleep" && mouseX>462 && mouseX<462+480 && mouseY>665 && mouseY<665+50|| state == "nosleep" && mouseX>462 && mouseX<462+480 && mouseY>665 && mouseY<665+50){  
+    rect(462, 665, 480, 50);
     state = "pregame";
     counter = 0;
     channels = 0;
     hit = 0;
-  }  
+  }
+
 }
