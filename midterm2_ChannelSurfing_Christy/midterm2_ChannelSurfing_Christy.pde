@@ -2,33 +2,45 @@
 //All rights to all materials remain courtesy to their respective owners.
 
 PImage chiller;
+PImage car;
+PImage carscene;
 PImage historylogo;
 PImage mtv;
 PImage nbc;
 PImage syfy;
 PImage hallmark;
 PImage ae;
+PImage nature;
 PImage girlhair;
 PImage guyhair;
 PImage heart;
+PImage night;
 PImage magnifying;
 PImage detective;
+PImage sherlock;
+PImage room;
 PImage guitar;
 PImage star;
 PImage couch;
 PImage hair;
 PImage sleep;
 PImage madmom;
+PImage eagle;
+PImage crack;
+PImage censor;
+PImage uparrow;
+PImage downarrow;
 
 int numFrames = 17;
 int numFramesComedy = 12;
+int numFramesSciFi = 4;
 int numFramesFlag = 9;
 int numFramesHoop = 7;
 int frame = 0;
 PImage[] blood = new PImage[numFrames];
 PImage[] flame = new PImage[numFrames];
 PImage[] snl = new PImage[numFramesComedy];
-PImage[] lightsaber = new PImage[numFramesComedy];
+PImage[] spaceship = new PImage[numFramesSciFi];
 PImage[] flag = new PImage[numFramesFlag];
 PImage[] hoop = new PImage[numFramesHoop];
 
@@ -38,6 +50,7 @@ float moveDown = 220;
 float xmove = 200;
 float ymove = 200; 
 String state = "pregame";
+int hit = 0;
 
 void setup(){
   size(1000, 750);
@@ -81,6 +94,8 @@ void setup(){
   flame[14] = loadImage("data/flame14.gif");
   flame[15] = loadImage("data/flame15.gif");
   flame[16] = loadImage("data/flame16.gif");
+  car = loadImage("car.png");
+  carscene = loadImage("carscene.jpg");
   
   //comedy
   snl[0] = loadImage("data/snl.gif");
@@ -98,31 +113,26 @@ void setup(){
   nbc = loadImage("nbc.png");
   
   //sci-fi
-  lightsaber[0] = loadImage("data/lightsaber.gif");
-  lightsaber[1] = loadImage("data/lightsaber1.gif");
-  lightsaber[2] = loadImage("data/lightsaber2.gif");
-  lightsaber[3] = loadImage("data/lightsaber3.gif");
-  lightsaber[4] = loadImage("data/lightsaber4.gif");
-  lightsaber[5] = loadImage("data/lightsaber5.gif");
-  lightsaber[6] = loadImage("data/lightsaber6.gif");
-  lightsaber[7] = loadImage("data/lightsaber7.gif");
-  lightsaber[8] = loadImage("data/lightsaber8.gif");
-  lightsaber[9] = loadImage("data/lightsaber9.gif");
-  lightsaber[10] = loadImage("data/lightsaber10.gif");
-  lightsaber[11] = loadImage("data/lightsaber11.gif");
+  spaceship[0] = loadImage("data/spaceship.gif");
+  spaceship[1] = loadImage("data/spaceship1.gif");
+  spaceship[2] = loadImage("data/spaceship2.gif");
+  spaceship[3] = loadImage("data/spaceship3.gif");
   star = loadImage("star.png");
   syfy = loadImage("syfy.png");
+  night = loadImage("night.jpg");
   
   //romance
   girlhair = loadImage("girlhair.png");
   guyhair = loadImage("guyhair.png");
   heart = loadImage("heart.png");
   hallmark = loadImage("hallmark.png");
+  nature = loadImage("nature.jpg");
   
   //mystery
   magnifying = loadImage("magnifying.png");
   detective = loadImage("detective.png");
   ae = loadImage("ae.png");
+  sherlock = loadImage("sherlock.jpg");
   
   //history
   flag[0] = loadImage("data/flag.gif");
@@ -135,10 +145,12 @@ void setup(){
   flag[7] = loadImage("data/flag7.gif");
   flag[8] = loadImage("data/flag8.gif");
   historylogo = loadImage("historylogo.png");
+  eagle = loadImage("eagle.png");
   
   //music
   guitar = loadImage("guitar.png");
   mtv = loadImage("mtv.png");
+  room = loadImage("room.jpg");
   
   //sports
   hoop[0] = loadImage("data/hoop.gif");
@@ -154,6 +166,10 @@ void setup(){
   hair = loadImage("hair.png");
   sleep = loadImage("sleep.png");
   madmom = loadImage("madmom.png");
+  crack = loadImage("crack.png");
+  censor = loadImage("censor.jpg");
+  uparrow = loadImage("uparrow.png");
+  downarrow = loadImage("downarrow.png");
 }
 
 void draw(){
@@ -191,8 +207,8 @@ void draw(){
     textAlign(CENTER);
     textSize(28);
     fill(255);
-    text("We have to help Sophia fall asleep", 385, 150);
-    text("Choose the best show to help her do so", 387, 200);
+    text("Sophia snuck downstairs to watch TV", 385, 150);
+    text("Get her sleepy or her mom will get mad", 387, 200);
     fill(153, 245, 193);
     text("Instruction:", 380, 300);
     textSize(20);
@@ -234,15 +250,10 @@ void draw(){
     textAlign(CENTER);
     textSize(16);
     remote();
-    fill(255, 170, 171);
-    rect(100, 110, 520, 320);
-    fill(#3B895D);
-    rect(280, 350, 150, 50);
-    fill(0);
-    ellipse(300, 400, 30, 30);
-    ellipse (400, 400, 30, 30);
+    image(carscene, 100, 110, 520, 320);
+    image(car, 200, 340, 250, 100);
     frame = (frame+1)%numFrames;  
-    image(flame[frame], 100, 110, 520, 320); 
+    image(flame[frame], 80, 110, 520, 320); 
     //abc
     textAlign(CENTER);
     textSize(40);
@@ -273,11 +284,10 @@ void draw(){
     textAlign(CENTER);
     textSize(16);
     remote();
-    fill(0);
-    rect(100, 110, 520, 320);
-    frame = (frame+1)%numFramesComedy;  // Use % to cycle through frames
-    image(lightsaber[frame], 100, 110, 520, 320); 
-    image(star, 350, 200, 50, 50);
+    image(night, 100, 110, 520, 320);
+    frame = (frame+1)%numFramesSciFi;  // Use % to cycle through frames
+    image(spaceship[frame], 300, 110, 100, 100);
+    image(star, 280, 250, 50, 50);
     image(star, 300, 400, 10, 10);
     image(star, 110, 300, 20, 20);
     image(star, 500, 130, 40, 40);
@@ -293,10 +303,9 @@ void draw(){
     textAlign(CENTER);
     textSize(16);
     remote();
-    fill(214, 246, 252);
-    rect(100, 110, 520, 320);
+    image(nature, 100, 110, 520, 320);
     fill(255, 231, 185);
-    ellipse(280, 260, 70, 70);
+    ellipse(278, 260, 70, 70);
     ellipse(450, 260, 70, 70);
     image(girlhair, 150, 200, 200, 200);
     image(guyhair, 400, 200, 100, 100);
@@ -317,14 +326,13 @@ void draw(){
     textAlign(CENTER);
     textSize(16);
     remote();
-    fill(#C2EFFC);
-    rect(100, 110, 520, 320);
+    image(sherlock, 100, 110, 520, 320);
     image(magnifying, xmove, ymove, 100, 100); 
     image(detective, 350, 250, 100, 170);
     image(ae, 550, 370, 60, 50);
     person();
     image(couch, 70, 600, 550, 200);  
-    if (xmove>=50 && xmove<=500 && ymove>=110 && ymove <=500){
+    if (xmove>=50 && xmove<=500 && ymove>=140 && ymove <=500){
       xmove -= 0.5;
       ymove -= 0.5;
     } else{
@@ -340,6 +348,7 @@ void draw(){
     remote();
     fill(250, 250, 250);
     rect(100, 110, 520, 320);
+    image(eagle, 450, 130, 150, 150);
     frame = (frame+1)%numFramesFlag;  // Use % to cycle through frames
     image(flag[frame], 140, 130, 270, 170);
     image(historylogo, 525, 330, 100, 100);
@@ -353,9 +362,8 @@ void draw(){
     background (237, 242, 203);
     tv();
     remote();
-    fill(#C2D5FC);
-    rect(100, 110, 520, 320);
-    image(guitar, 160, 300, 200, 100);
+    image(room, 100, 110, 520, 320);
+    image(guitar, 160, 250, 200, 180);
     image(mtv, 530, 345, 100, 100);
     musicnote();
     person();
@@ -372,22 +380,37 @@ void draw(){
     frame = (frame+1)%numFramesHoop;  // Use % to cycle through frames
     image(hoop[frame], 150, 130, 240, 170);
     fill(0, 0, random(0,255));
-    text("Steph Curry with the 3 pointers", 280, 350);
+    text("Steph Curry with the 3 pointer!!!", 276, 350);
     fill(255, 0, 0);
     textSize(50);
     text("ESPN", 550, 420);
     person();
     image(couch, 70, 600, 550, 200); 
-}
+  }
+  else if (state == "destroy"){
+    background (250, 197, 203);
+    fill(75, 50, 12);
+    rect(400, 70, 500, 300);
+    fill(0);
+    rect(430, 100, 440, 240);
+    image(censor, 430, 100, 440, 240);
+    image(crack, 470, 95, 200, 200);
+    textAlign(CENTER);
+    textSize(24);
+    fill(0);
+    text("Uh oh, Sophia did not go back to sleep", 700, 450);
+    text("Her mom got mad at her", 700, 500);
+    text("Help her mom destroy the TV by click on it", 700, 550);
+    image(madmom, 200, 260, 250, 400); 
+    
+  }
   else if (state=="nosleep"){
     background (250, 197, 203);
     textAlign(CENTER);
     textSize(30);
     fill(0);
-    text("Sophia did not go to sleep", width/2, 120);
-    text("Her mom grounded her", width/2, 170);
     text("Try again?", width/2, 220);
-    image(madmom, 375, 260, 250, 400);
+    image(madmom, 200, 260, 250, 400);
     text("Press the spacebar to restart the game", 630, 700);
   }   
   else if (state=="sleep"){
@@ -400,8 +423,8 @@ void draw(){
     image(sleep, 100, 400);
     text("Press the spacebar to restart the game", 630, 700);
   }
-  println(counter);
-  println(channels);
+  println(state);
+  println(hit);
 }
 
 float xposition = 290;
@@ -478,10 +501,14 @@ void remote(){
     rect(890, 440, 30, 30); //6   
     rect(780, 500, 30, 30); //7
     rect(835, 500, 30, 30); //8
-    rect(890, 500, 30, 30); //9  
+    rect(890, 500, 30, 30); //9
     rect(780, 130, 140, 220);
     fill(0);
     rect(800, 300, 100, 30); //select
+    rect(830, 170, 40, 40); //up
+    rect(830, 240, 40, 40); //down
+    image(uparrow, 835, 175, 30, 30);
+    image(downarrow, 835, 245, 30, 30);
     textAlign(CENTER);
     fill(#FCF221);
     text("select", 850, 320);
@@ -585,19 +612,103 @@ void mousePressed(){
     rect(800, 300, 100, 30); //select
     counter += 80;
     channels +=1;
+  } 
+  //down
+  if (state== "scary" && mouseX>830 && mouseX<830+40 && mouseY>240 && mouseY<240+40){
+    rect(830, 240, 40, 40); //up
+    state = "action";
+  }
+  else if (state== "action" && mouseX>830 && mouseX<830+40 && mouseY>240 && mouseY<240+40){
+    rect(830, 240, 40, 40); //up
+    state = "comedy";
+  }
+  else if (state== "comedy" && mouseX>830 && mouseX<830+40 && mouseY>240 && mouseY<240+40){
+    rect(830, 240, 40, 40); //up
+    state = "sci-fi";
+  }
+  else if (state== "sci-fi" && mouseX>830 && mouseX<830+40 && mouseY>240 && mouseY<240+40){
+    rect(830, 240, 40, 40); //up
+    state = "romance";
+  }
+  else if (state== "romance" && mouseX>830 && mouseX<830+40 && mouseY>240 && mouseY<240+40){
+    rect(830, 240, 40, 40); //up
+    state = "mystery";
+  }
+  else if (state== "mystery" && mouseX>830 && mouseX<830+40 && mouseY>240 && mouseY<240+40){
+    rect(830, 240, 40, 40); //up
+    state = "history";
+  }
+  else if (state== "history" && mouseX>830 && mouseX<830+40 && mouseY>240 && mouseY<240+40){
+    rect(830, 240, 40, 40); //up
+    state = "music";
+  }
+  else if (state== "music" && mouseX>830 && mouseX<830+40 && mouseY>240 && mouseY<240+40){
+    rect(830, 240, 40, 40); //up
+    state = "sports";
+  }
+  else if (state== "sports" && mouseX>830 && mouseX<830+40 && mouseY>240 && mouseY<240+40){
+    rect(830, 240, 40, 40); //up
+    state = "scary";
+  }
+  //up
+  if (state == "scary" && mouseX>830 && mouseX<830+40 && mouseY>170 && mouseY<170+40){
+    rect(830, 170, 40, 40); //up
+    state = "sports";
+  }
+  if (state == "action" && mouseX>830 && mouseX<830+40 && mouseY>170 && mouseY<170+40){
+    rect(830, 170, 40, 40); //up
+    state = "scary";
   }  
+  if (state == "comedy" && mouseX>830 && mouseX<830+40 && mouseY>170 && mouseY<170+40){
+    rect(830, 170, 40, 40); //up
+    state = "action";
+  }  
+  if (state == "sci-fi" && mouseX>830 && mouseX<830+40 && mouseY>170 && mouseY<170+40){
+    rect(830, 170, 40, 40); //up
+    state = "comedy";
+  }  
+  if (state == "romance" && mouseX>830 && mouseX<830+40 && mouseY>170 && mouseY<170+40){
+    rect(830, 170, 40, 40); //up
+    state = "sci-fi";
+  }  
+  if (state == "mystery" && mouseX>830 && mouseX<830+40 && mouseY>170 && mouseY<170+40){
+    rect(830, 170, 40, 40); //up
+    state = "romance";
+  }  
+  if (state == "history" && mouseX>830 && mouseX<830+40 && mouseY>170 && mouseY<170+40){
+    rect(830, 170, 40, 40); //up
+    state = "mystery";
+  }  
+  if (state == "music" && mouseX>830 && mouseX<830+40 && mouseY>170 && mouseY<170+40){
+    rect(830, 170, 40, 40); //up
+    state = "history";
+  }  
+  if (state == "sports" && mouseX>830 && mouseX<830+40 && mouseY>170 && mouseY<170+40){
+    rect(830, 170, 40, 40); //up
+    state = "music";
+  }   
   if (channels == 3 && counter < 100){
-    state = "nosleep";
+    state = "destroy";
   }
   if (channels == 3 && counter >= 100){
     state = "sleep";
   }
+  if (state == "destroy" && mouseX>400 && mouseX<400+500 && mouseY>70 && mouseY<70+300){
+    rect(400, 70, 500, 300);
+    hit +=1;
+  }
+  if (state == "destroy" && hit >= 10){
+    state = "nosleep";
+  }
+
 }
 
-void keyPressed() {
-  if (state == "sleep" && (key == ' ') || state == "nosleep" && (key == ' ')){
+void keyPressed(){
+  if (state == "sleep" && (key == ' ')|| state == "nosleep" && (key == ' ')){
+    //rect
     state = "pregame";
     counter = 0;
     channels = 0;
-  }
+    hit = 0;
+  }  
 }
