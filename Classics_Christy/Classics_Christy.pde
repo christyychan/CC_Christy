@@ -28,8 +28,6 @@ void draw() {
     for (int i=0; i < BubbleList.size (); i=i+1) {
       BubbleList.get(i).display();
       BubbleList.get(i).move();
-     
-  
       BubbleList.get(i).pop();
       //BubbleList.get(i).checkPop(BubbleList);
     }

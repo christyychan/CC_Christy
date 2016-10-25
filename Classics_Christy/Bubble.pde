@@ -39,22 +39,4 @@ class Bubble {
     y=y-1;
   }
 
-  
-
-
-/*
-  void checkPop(ArrayList <Bubble> BubbleList) { //check to see if bubbles pop or not
-    for (int i=0; i < BubbleList.size (); i ++) {
-      if ( state == MOVING && isTouching(BubbleList.get(i))) {
-        state = DEAD;
-      }
-    }
-  }
-  boolean isTouching(Bubble other) {
-    if (dist(start1, start2, other.x, other.y) == 0) {
-      return true;
-    } else {
-      return false;
-    }
-  } */
 } //end class
