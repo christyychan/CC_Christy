@@ -1,3 +1,7 @@
+//YouTube by Christy and Lauren
+//Description: A basic YouTube interface
+//Instructions: Click on the video icons to switch videos
+
 import processing.video.*;
 
 PImage charliePhoto;
@@ -8,14 +12,11 @@ PImage subscribe;
 PImage options;
 String state="chipmunk";
 
-//PImage thumbsUp;
-
 String VideoTitle="Title of the video";
 Movie movie;
 Movie movie2;
 Movie movie3;
 
-//image[] ChannelPicture= new image[3];
 void movieEvent(Movie movie){
  movie.read(); 
 }
@@ -29,16 +30,21 @@ void movieEvent3(Movie movie3){
 
 void setup(){
   size(800,600);
+  
+  //intializing the movie
   movie= new Movie(this,"DramaticChipmunk.mp4");
   movie2= new Movie(this,"movie2.mp4");
   movie3= new Movie(this,"charlie.mp4");
+  
+  //playing only one movie
   movie.play();
   movie2.pause();
   movie3.pause();
+  
+  //load image
   youtubeLogo=loadImage("youtubelogo.png");
   subscribe=loadImage("subscribe.png");
   options=loadImage("options.png");
-  //thumbsUp=loadImage("thumbsup");
   girlsPhoto= loadImage("girlsphoto.png");
   charliePhoto=loadImage("charliephoto.png");
   chipmunkPhoto=loadImage("chipmunkphoto.png");
@@ -58,9 +64,8 @@ if (state=="chipmunk"){
  fill(255);
  rect(25,50,600,425);
  image(movie,25,50,575,425);
-
-   
  
+ //display interface
  rectMode(CORNERS);
  //side video box
  rect(610,50,780,550);
@@ -323,7 +328,7 @@ if (state=="girls"){
   
 }
 }
-
+//when you want to switch videos
 void mousePressed(){
    if (state=="chipmunk" && mouseX>620 && mouseX<770 && mouseY>60 && mouseY<200){
      state="charlie";
