@@ -6,7 +6,6 @@ PImage chipmunkPhoto;
 PImage youtubeLogo;
 PImage subscribe;
 PImage options;
-PImage play;
 String state="chipmunk";
 
 //PImage thumbsUp;
@@ -40,7 +39,6 @@ void setup(){
   subscribe=loadImage("subscribe.png");
   options=loadImage("options.png");
   //thumbsUp=loadImage("thumbsup");
-  play=loadImage("play.png");
   girlsPhoto= loadImage("girlsphoto.png");
   charliePhoto=loadImage("charliephoto.png");
   chipmunkPhoto=loadImage("chipmunkphoto.png");
