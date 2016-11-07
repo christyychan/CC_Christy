@@ -1,6 +1,7 @@
 //High Striker by Christy Chan
 //Recreating a popular carnival game, high striker
 //Move the hammer up and down, mouse press when you think it is high enough to ring the bell
+//Refresh to play again
 
 //setting up global variable
 var state = "pregame"
@@ -76,15 +77,13 @@ function draw() {
     if(start >300 && start<=400){
       fill(0,0,random(0,255))
       textSize(50)
-      text("Okay", 250, height/2)
+      text("Okay", 240, height/2)
 
     }
     if(start >400){
       fill(random(0,255))
       textSize(50)
       text("Weak", 230, height/2)
-
-
     }
   }
 }
