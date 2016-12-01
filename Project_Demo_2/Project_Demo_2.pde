@@ -166,6 +166,10 @@ void mousePressed(){
   else if (state == "setting" && mouseX >=moveTent && mouseX<=moveTent+400 && mouseY >=200 && mouseY<=200+500){
     state = "highstriker";
   }
+  else if (state == "highstriker" && mouseX >=100 && mouseX<=100+100 && mouseY >=100 && mouseY<=100+100){
+    state = "setting";
+    start = 450;
+  }
   else if (state == "highstriker"){
     state = "hit";
     if (mouseY<=100){
@@ -185,10 +189,11 @@ void mousePressed(){
       tickets+=10;
     }
   }
-  else if (state == "highstriker" || state == "hit" & mouseX >=100 && mouseX<=100+100 && mouseY >=100 && mouseY<=100+100){
+  else if (state == "hit" && mouseX >=100 && mouseX<=100+100 && mouseY >=100 && mouseY<=100+100){
     state = "setting";
     start = 450;
   }
+  
 }
 
 //void mouseMoved(){
