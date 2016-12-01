@@ -12,7 +12,6 @@ int moveWheel = 500;
 int movePrize = 900;
 int start = 450;
 int tickets = 0;
-
 String object = "";
 
 void setup(){
@@ -31,14 +30,17 @@ void draw(){
     background(#E0F3FF);
     textAlign(CENTER);
     textSize(50);
+    fill(0);
     text("Type in your name", width/2, 100);
     fill(0);
     text(object, width/2, 300);    
-    text("Submit", 450, 500);
     rect(450, 500, 300, 100);
+    fill(255);
+    text("Submit", 600, 570);
   }
   if (state == "welcome"){
     background(#E0F3FF);
+    fill(0);
     image(person, 900, 250, 250, 400);
     text("Welcome", width/2, 100);
     text(object, width/2, 200);
@@ -69,10 +71,10 @@ void draw(){
       movePrize -=0;
   }
     else if(mouseX >= 1000){
-      moveTent -=7;
-      moveTent1 -=7;
-      moveWheel -=7;
-      movePrize -=7;
+      moveTent -=9;
+      moveTent1 -=9;
+      moveWheel -=9;
+      movePrize -=9;
     }
     if (moveTent1 >=700){
       moveTent -=0;
@@ -81,12 +83,11 @@ void draw(){
       movePrize -=0;
     }
     else if (mouseX <=200){
-      moveTent +=7;
-      moveTent1+=7;
-      moveWheel +=7;
-      movePrize +=7;
-    }
-  
+      moveTent +=9;
+      moveTent1+=9;
+      moveWheel +=9;
+      movePrize +=9;
+    }  
   }
   if (state == "highstriker"){
     striker();
@@ -185,7 +186,8 @@ void mousePressed(){
     }
   }
   else if (state == "highstriker" || state == "hit" & mouseX >=100 && mouseX<=100+100 && mouseY >=100 && mouseY<=100+100){
-    state = "setting";  
+    state = "setting";
+    start = 450;
   }
 }
 
