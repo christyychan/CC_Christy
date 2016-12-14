@@ -1,21 +1,33 @@
-PImage tent;
+import processing.video.*;
+PImage photobooth;
+PImage photobooth2;
+PImage smile;
+PImage frown;
+PImage curtain1;
+PImage curtain2;
 PImage wheel;
 PImage prize;
-PImage person;
 PImage hammer;
 PImage hammer1;
 PImage bell;
 PImage banner;
 PImage background;
 PImage prize_background;
+PImage selectbear;
+PImage selectpaddle;
+PImage selectsquid;
+PImage selectduck;
+PImage selectball;
+
 String state = "pregame";
-int moveTent = 100;
-int moveTent1 = -300;
-int moveTent2 = -700;
-int moveWheel = 500;
-int movePrize = 980;
+int moveTent = -200;
+int moveTent1 = -600;
+int moveTent2 = -1050;
+int moveWheel = 400;
+int movePrize = 990;
 int start = 450;
 int tickets = 0;
+int moveBackground = -1200;
 String object = "";
 
 int shots = 5;
@@ -29,21 +41,45 @@ int colors7 = 0;
 int frame = 0;
 int numFrames = 31;
 PImage[] ferris = new PImage[numFrames];
+Capture video = new Capture(this, "name=FaceTime HD Camera,size=1280x720,fps=30");
+Capture video1 = new Capture(this, "name=FaceTime HD Camera,size=1280x720,fps=30");
 
+void captureEvent(Capture video){
+  video.read();
+}
+void captureEvent1(Capture video1){
+  video1.read();
+}
 
 void setup(){
   size(1200, 700);
-  tent = loadImage("tent.png");
+  video = new Capture(this, 720, 500);
+  video.start();
+  video1 = new Capture(this, 720, 500);
+  video1.start();
+  photobooth = loadImage("photobooth.png");
+  photobooth2 = loadImage("photobooth2.png");
+  smile = loadImage("smile.png");
+  frown = loadImage("frown.png");
+  curtain1 = loadImage("curtain1.png");
+  curtain2 = loadImage("curtain2.png");
+
   wheel = loadImage("wheel.png");
   prize = loadImage("prize.png");
-  person = loadImage("person.png");
+  //person = loadImage("person.png");
   hammer = loadImage("hammer.png");
   hammer1 = loadImage("hammer copy.png");
   bell = loadImage("bell.png");
-  background = loadImage("background.png");
+  background = loadImage("background_1.png");
   banner = loadImage("banner.png");
-  prize_background = loadImage("prize background.png");
   
+  prize_background = loadImage("prize_background.png");
+  selectbear = loadImage("selectbear.png");
+  selectpaddle = loadImage("selectpaddle.png");
+  selectsquid = loadImage("selectsquid.png");
+  selectduck = loadImage("selectduck.png");
+  selectball = loadImage("selectball.png");
+
   ferris[0]  = loadImage("data/ferris0.gif");
   ferris[1]  = loadImage("data/ferris1.gif");
   ferris[2]  = loadImage("data/ferris2.gif");
@@ -93,31 +129,65 @@ void draw(){
   if (state == "welcome"){
     background(#E0F3FF);
     fill(0);
-    image(person, 900, 250, 250, 400);
+    //image(person, 900, 250, 250, 400);
     text("Welcome", width/2, 100);
     text(object, width/2, 200);
     rect(450, 500, 300, 100);
+    
+  }
+  if (state == "picture"){
+    noStroke();
+    image(photobooth, 0,0,1200,700);
+    image(video,230,150);
+    fill(255);
+    rect(230, 150, 720/3,500);
+    rect(710, 150, 720/3,500);
+    rect(470, 500, 300, 250);
+    image(curtain1, 0, 0, 420, 700);
+    image(curtain2, 780, 0, 420, 700);
+    image(smile, 550, 300, 100,100);
+    stroke(1);
+    fill(0);
+    rect(450, 500, 300, 100);
+  }
+  if (state == "picture1"){
+    noStroke();
+    background(255);
+    
+    image(video1,230,150);
+    fill(255);
+    rect(230, 150, 720/3,500);
+    rect(710, 150, 720/3,500);
+    rect(470, 500, 300, 250);
+    //image(curtain1, 0, 0, 420, 700);
+    //image(curtain2, 780, 0, 420, 700);
+    image(photobooth2, 0,0,1200,700);
+    image(frown, 550, 300, 100,100);
+    
+    stroke(1);
+    fill(0);
+    rect(450, 500, 300, 100);
+  }
+  if (state == "photostrip"){
+    
   }
   if (state == "instructions"){
     background(#E0F3FF);
     text("Instructions", width/2, 100);
     rect(450, 500, 300, 100);
+    
   }
   if (state == "setting"){
-    background(150,210,157);
-    image(background, 0, 0, width+400, 670);
+    image(background, moveBackground, -100, width*3, height+100);
     fill(0);
     textSize(40);
     text("Tickets: " + tickets, 150, 50);
-    image(tent, moveTent, 200, 400, 500);
-    image(tent, moveTent1, 200, 400, 500);
-    image(tent, moveTent2, 200, 400, 500);
     frame = (frame+1)%numFrames; 
-    image(ferris[frame], moveWheel, 150, 420, 500);
-    image(prize, movePrize, 250, 310, 400);
+    image(ferris[frame], moveWheel, 60, 420+50, 500+100);
     fill(255);
-    triangle(50, 500, 100, 450, 100, 550);
-    triangle(1150, 500, 1100, 450, 1100, 550);
+    triangle(50, 635, 90, 620, 90, 660);
+    triangle(1130, 635, 1090, 620, 1090, 660);
+    
     
     if (movePrize <= 100){
       moveTent -=0;
@@ -125,13 +195,15 @@ void draw(){
       moveTent2 -=0;
       moveWheel -=0;
       movePrize -=0;
+      moveBackground -=0;
   }
     else if(mouseX >= 1000){
-      moveTent -=9;
-      moveTent1 -=9;
-      moveTent2 -=9;
-      moveWheel -=9;
-      movePrize -=9;
+      moveTent -=20;
+      moveTent1 -=20;
+      moveTent2 -=20;
+      moveWheel -=20;
+      movePrize -=20;
+      moveBackground -=20;
     }
     if (moveTent1 >=700){
       moveTent -=0;
@@ -139,13 +211,15 @@ void draw(){
       moveTent2 -=0;
       moveWheel -=0;
       movePrize -=0;
+      moveBackground -=0;
     }
     else if (mouseX <=200){
-      moveTent +=9;
-      moveTent1+=9;
-      moveTent2+=9;
-      moveWheel +=9;
-      movePrize +=9;
+      moveTent +=20;
+      moveTent1+=20;
+      moveTent2+=20;
+      moveWheel +=20;
+      movePrize +=20;
+      moveBackground +=20;
     }  
   }
   if (state == "highstriker"){
@@ -185,10 +259,45 @@ void draw(){
   }
   if (state == "prize"){
     image(prize_background, 0,0,1200,700);
-    image(banner, 0,-150,500,400);
-    image(banner, 500,-150,500,400);
-    image(banner, 1000,-150,500,400);
-    rect(100,500,100,100);
+    fill(255);
+    rect(40,530,200,50);
+    fill(0);
+    text("back", 140,567);
+    if (state == "prize" && mouseX>100 && mouseX<100+250 && mouseY>45 && mouseY<45+230){
+      image(selectbear, 0,0,1200,700);
+      fill(255);
+      rect(40,530,200,50);
+      fill(0);
+      text("back", 140,567);
+    }
+    else if (state == "prize" && mouseX>850 && mouseX<850+200 && mouseY>70 && mouseY<70+200){
+      image(selectball, 0,0,1200,700);
+      fill(255);
+    rect(40,530,200,50);
+    fill(0);
+    text("back", 140,567);
+    }
+    else if (state == "prize" && mouseX>500 && mouseX<500+200 && mouseY>125 && mouseY<125+300){
+      image(selectsquid, 0,0,1200,700);
+      fill(255);
+      rect(40,530,200,50);
+      fill(0);
+      text("back", 140,567);
+    }
+    else if (state == "prize" && mouseX>760 && mouseX<760+150 && mouseY>500 && mouseY<500+165){
+      image(selectduck, 0,0,1200,700);
+      fill(255);
+      rect(40,530,200,50);
+      fill(0);
+      text("back", 140,567);
+    }
+    else if (state == "prize" && mouseX>190 && mouseX<190+300 && mouseY>520 && mouseY<520+160){
+      image(selectpaddle, 0,0,1200,700);
+      fill(255);
+      rect(40,530,200,50);
+      fill(0);
+      text("back", 140,567);
+    }
   }
   
   if (state == "dart"){
@@ -204,10 +313,11 @@ void draw(){
     fill(0);
     text(str(shots), 50,100);
     //top row
-    fill(colors);
+    fill(colors);    
     rect(315+290, 70-20, 10, 20, 10, 10, 0,0);
     rect(305+290, 70,30,100,10,10,0,0);
-    
+    image(video, 315+250, 70, 100, 80);
+    image(video1,150,500, 100, 100);
     
     //second row
     fill(colors2);
@@ -298,18 +408,29 @@ void keyPressed(){
   }
 }
 
+
 void mousePressed(){
   if (state == "pregame" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
     state = "welcome";
   }
   else if (state == "welcome" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
+    state = "picture";
+  }
+  else if (state == "picture" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
+    video.stop();
+    state = "picture1";
+  }
+  else if (state == "picture1" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
+    video.stop();
     state = "instructions";
   }
   else if (state == "instructions" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
+    video1.stop();
     state = "setting";
   }
-  else if (state == "setting" && mouseX >=moveTent && mouseX<=moveTent+400 && mouseY >=200 && mouseY<=200+500){
-    state = "highstriker";
+  else if (state == "setting" && mouseX >=moveTent && mouseX<=moveTent+390 && mouseY >=180 && mouseY<=180+420){
+    state = "highstriker"; 
+    
   }
   else if (state == "highstriker" && mouseX >=100 && mouseX<=100+100 && mouseY >=100 && mouseY<=100+100){
     state = "setting";
@@ -338,16 +459,17 @@ void mousePressed(){
     state = "setting";
     start = 450;
   }
-  else if (state == "setting" && mouseX >=movePrize && mouseX<=movePrize+310 && mouseY >=250 && mouseY<=250+400){
+  else if (state == "setting" && mouseX >=movePrize && mouseX<=movePrize+380 && mouseY >=250 && mouseY<=250+400){
     state = "prize";
   }
   else if (state == "prize" && mouseX >=100 && mouseX<=100+100 && mouseY >=500 && mouseY<=500+100){
     state = "setting";
   }
-  else if (state == "setting" && mouseX >=moveTent1 && mouseX<=moveTent1+400 && mouseY >=200 && mouseY<=200+500){
+  else if (state == "setting" && mouseX >=moveTent1 && mouseX<=moveTent1+350 && mouseY >=180 && mouseY<=180+420){
     state = "bottle";
+    
   }
-  else if (state == "setting" && mouseX >=moveTent2 && mouseX<=moveTent2+400 && mouseY >=200 && mouseY<=200+500){
+  else if (state == "setting" && mouseX >=moveTent2 && mouseX<=moveTent2+360 && mouseY >=180 && mouseY<=180+420){
     state ="dart";
   }
   else if (state =="bottle"){
