@@ -1,6 +1,8 @@
 import processing.video.*;
+PImage welcome;
 PImage photobooth;
 PImage photobooth2;
+PImage photostrip;
 PImage smile;
 PImage frown;
 PImage curtain1;
@@ -10,7 +12,6 @@ PImage prize;
 PImage hammer;
 PImage hammer1;
 PImage bell;
-PImage banner;
 PImage background;
 PImage prize_background;
 PImage selectbear;
@@ -38,6 +39,26 @@ int colors3= 0;
 int colors4 = 0;
 int colors7 = 0;
 
+int count = 0;
+int ticket1= int(random(10,20));
+int ticket2= int(random(10,20));
+int ticket3= int(random(10,20));
+int ticket4= int(random(10,20));
+int ticket5= int(random(10,20));
+int ticket6= int(random(10,20));
+float x1 = random(0,1100);
+float y1 = random(70,100);
+float x2 = random(0,1200);
+float y2 = random(170,200);
+float x3 = random(0,1200);
+float y3 = random(270,300);
+float x4 = random(0,1200);
+float y4 = random(470,500);
+float x5 = random(0,1200);
+float y5 = random(570,600);
+float x6 = random(0,1200);
+float y6 = random(660,670);
+
 int frame = 0;
 int numFrames = 31;
 PImage[] ferris = new PImage[numFrames];
@@ -57,8 +78,11 @@ void setup(){
   video.start();
   video1 = new Capture(this, 720, 500);
   video1.start();
+  
+  welcome = loadImage("welcome.png");
   photobooth = loadImage("photobooth.png");
   photobooth2 = loadImage("photobooth2.png");
+  photostrip = loadImage("photostrip.png");
   smile = loadImage("smile.png");
   frown = loadImage("frown.png");
   curtain1 = loadImage("curtain1.png");
@@ -71,7 +95,6 @@ void setup(){
   hammer1 = loadImage("hammer copy.png");
   bell = loadImage("bell.png");
   background = loadImage("background_1.png");
-  banner = loadImage("banner.png");
   
   prize_background = loadImage("prize_background.png");
   selectbear = loadImage("selectbear.png");
@@ -127,11 +150,10 @@ void draw(){
     text("Submit", 600, 570);
   }
   if (state == "welcome"){
-    background(#E0F3FF);
+    image(welcome, 0,0,1200,700);
     fill(0);
-    //image(person, 900, 250, 250, 400);
-    text("Welcome", width/2, 100);
-    text(object, width/2, 200);
+    textSize(500);
+    text(object, 500, 300);
     rect(450, 500, 300, 100);
     
   }
@@ -169,13 +191,14 @@ void draw(){
     rect(450, 500, 300, 100);
   }
   if (state == "photostrip"){
-    
+    image(photostrip, 0,0,1200,700);
+    image(video1, 250,150,250,200);
+    image(video, 250,450,250,200);
   }
   if (state == "instructions"){
     background(#E0F3FF);
     text("Instructions", width/2, 100);
     rect(450, 500, 300, 100);
-    
   }
   if (state == "setting"){
     image(background, moveBackground, -100, width*3, height+100);
@@ -301,11 +324,126 @@ void draw(){
   }
   
   if (state == "dart"){
-    background(255);
-    for (int x = 200; x <300; x+=20){
-      for(int y = 200; y < 300; y+=20){
-        ellipse(x+150, y+150, 100, 100);      
-      } }
+    background(#92E0ED);
+    fill(#92E0ED);
+    noStroke();
+    rect(x1-50, y1-50, 100,100);
+    rect(x2-50, y2-50,100,100);
+    rect(x3-50, y3-50,100,100);
+    rect(x4-50, y4-50,100,100);
+    rect(x5-50, y5-50,100,100);
+    rect(x6-50, y6-50,100,100);
+  
+    stroke(0);
+    strokeWeight(1);
+    textSize(15);
+    fill(255);
+    
+    fill(#FAFF6A);    
+    //duck1
+    ellipse(x1,y1,100,70);
+    ellipse(x1+50, y1-40,50,50);
+    //duck2
+    ellipse(x2,y2,100,70);
+    ellipse(x2+50, y2-40,50,50);
+    //duck3
+    ellipse(x3,y3,100,70);
+    ellipse(x3+50, y3-40,50,50);
+    //duck4
+    ellipse(x4,y4,100,70);
+    ellipse(x4+50, y4-40,50,50);
+    //duck5
+    ellipse(x5,y5,100,70);
+    ellipse(x5+50, y5-40,50,50);
+    //duck6
+    ellipse(x6,y6,100,70);
+    ellipse(x6+50, y6-40,50,50);
+    
+    fill(#FF9A03);
+    triangle(x1+73, y1-30, x1+73, y1-50, x1+90, y1-40);
+    triangle(x2+73, y2-30, x2+73, y2-50, x2+90, y2-40);
+    triangle(x3+73, y3-30, x3+73, y3-50, x3+90, y3-40);
+    triangle(x4+73, y4-30, x4+73, y4-50, x4+90, y4-40);
+    triangle(x5+73, y5-30, x5+73, y5-50, x5+90, y5-40);
+    triangle(x6+73, y6-30, x6+73, y6-50, x6+90, y6-40);
+    image(video, x1+30,y1-60,50,50);
+    image(video1, x2+30,y2-60,50,50);
+    image(video, x3+30,y3-60,50,50);
+    image(video1, x4+30,y4-60,50,50);
+    image(video, x5+30,y5-60,50,50);
+    image(video1, x6+30,y6-60,50,50);
+    
+    fill(255);
+    rect(40,530,200,50);
+    fill(0);
+    text("back", 140,567);
+    
+    if (state == "dart" && x1>width+100){
+        x1 =-100;      
+      }
+      else {
+         x1++;
+         //r++;
+         if (state == "dart" && count == 0 && mousePressed == true && mouseX >= x1-50 && mouseX<=x1-50+100 && mouseY>=y1-50 && mouseY<=y1-50+100){
+          tickets+=ticket1;
+          count=1;
+          }
+       }
+      if (state == "dart" && x2>width+100){
+        x2 =-100;      
+      }
+      else {
+         x2++;
+         //r++;
+         if ( state == "dart" && count == 0 && mousePressed == true && mouseX >= x2-50 && mouseX<=x2-50+100 && mouseY>=y2-50 && mouseY<=y2-50+100){
+          tickets+=ticket2;
+          count=1;
+          }
+       }
+     if (state == "dart" && x3>width+100){
+        x3 =-100;      
+      }
+      else {
+         x3++;
+         //r++;
+         if (state == "dart" && count == 0 && mousePressed == true && mouseX >= x3-50 && mouseX<=x3-50+100 && mouseY>=y3-50 && mouseY<=y3-50+100){
+          tickets+=ticket3;
+          count=1;
+          }
+       }
+     if (state == "dart" && x4>width+100){
+        x4 =-100;      
+      }
+      else {
+         x4++;
+         //r++;
+         if (state == "dart" && count == 0 && mousePressed == true && mouseX >= x4-50 && mouseX<=x4-50+100 && mouseY>=y4-50 && mouseY<=y4-50+100){
+          tickets+=ticket4;
+          count=1;
+          }
+       }
+     if (state == "dart" && x5>width+100){
+        x5 =-100;      
+      }
+      else {
+         x5++;
+         //r++;
+         if (state == "dart" && count == 0 && mousePressed == true && mouseX >= x5-50 && mouseX<=x5-50+100 && mouseY>=y5-50 && mouseY<=y5-50+100){
+          tickets+=ticket5;
+          count=1;
+          }
+       }
+      if (state == "dart" && x6>width+100){
+        x6 =-100;      
+      }
+      else {
+         x6++;
+         //r++;
+         if (state == "dart" && count == 0 && mousePressed == true && mouseX >= x6-50 && mouseX<=x6-50+100 && mouseY>=y6-50 && mouseY<=y6-50+100){
+          tickets+=ticket6;
+          count=1;
+          }
+       }
   }
   if (state == "bottle"){
     background(255);
@@ -316,8 +454,7 @@ void draw(){
     fill(colors);    
     rect(315+290, 70-20, 10, 20, 10, 10, 0,0);
     rect(305+290, 70,30,100,10,10,0,0);
-    image(video, 315+250, 70, 100, 80);
-    image(video1,150,500, 100, 100);
+    image(video, 315+250, 80, 100, 80);
     
     //second row
     fill(colors2);
@@ -352,24 +489,29 @@ void draw(){
       //top row      
       colors = colors+255;  
       bottle_tickets += 5;
+      image(video1, 315+250, 80, 100, 80);
     }
     else if (shots>0 && mousePressed == true && mouseX>=410+120 && mouseX<=410+120+30 && pmouseY>450 && pmouseY<=500 && colors2!=255){
      //second row
       colors2= colors2+255;   
       bottle_tickets +=3;
+      image(video1, 315+250, 80, 100, 80);
     }
     else if (shots>0 && mousePressed == true && mouseX>=575+80 && mouseX<=575+80+30 && pmouseY>450 && pmouseY<=500 && colors3!=255){
       colors3+=255;  
       bottle_tickets +=3;
+      image(video1, 315+250, 80, 100, 80);
     }
     else if(shots>0 && mousePressed == true && mouseX>=390 && mouseX<=390+30 && pmouseY>500 && pmouseY<=550 && colors4!=255){
       colors4+=255;   
       bottle_tickets +=1;
+      image(video1, 315+250, 80, 100, 80);
     }
     
     else if (shots>0 && mousePressed == true && mouseX>=790 && mouseX<=790+30 && pmouseY>500 && pmouseY<=550 && colors7!=255){
       colors7+=255;   
       bottle_tickets+=1;
+      image(video1, 315+250, 80, 100, 80);
     }
   }
   if (state == "end of bottle"){
@@ -421,11 +563,14 @@ void mousePressed(){
     state = "picture1";
   }
   else if (state == "picture1" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
-    video.stop();
+    video1.stop();
+    state = "photostrip";
+  }
+  else if (state == "photostrip" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
+    
     state = "instructions";
   }
   else if (state == "instructions" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
-    video1.stop();
     state = "setting";
   }
   else if (state == "setting" && mouseX >=moveTent && mouseX<=moveTent+390 && mouseY >=180 && mouseY<=180+420){
@@ -471,6 +616,9 @@ void mousePressed(){
   }
   else if (state == "setting" && mouseX >=moveTent2 && mouseX<=moveTent2+360 && mouseY >=180 && mouseY<=180+420){
     state ="dart";
+  }
+  else if (state =="dart" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+    state = "setting";
   }
   else if (state =="bottle"){
     shots -=1;
