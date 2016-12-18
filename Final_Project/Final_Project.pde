@@ -1,4 +1,14 @@
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.effects.*;
+import ddf.minim.signals.*;
+import ddf.minim.spi.*;
+import ddf.minim.ugens.*;
+
 import processing.video.*;
+
+AudioPlayer music;
+
 PImage name;
 PImage welcome;
 PImage photobooth;
@@ -12,6 +22,7 @@ PImage curtain1;
 PImage curtain2;
 PImage wheel;
 PImage prize;
+PImage bottle_instructions;
 PImage bottle_background;
 PImage hammer;
 PImage hammer1;
@@ -39,6 +50,10 @@ PImage duck;
 PImage selectball;
 PImage ball;
 PImage error;
+PImage dart_instructions;
+PImage darterror;
+PImage cart;
+PImage cartticket;
 
 String state = "pregame";
 int moveTent = -200;
@@ -55,7 +70,7 @@ String object = "";
 
 int moveStriker = 200;
 
-int shots = 5;
+int shots = 6;
 int moveBall = 485;
 int moveBallx = mouseX;
 int bottle_tickets = 0;
@@ -104,6 +119,11 @@ void setup(){
   
   video1 = new Capture(this, 720, 500);
   
+  Minim minim;
+  minim = new Minim(this);
+  music = minim.loadFile("Circus Waltz FX.mp3");
+  music.play();
+  music.loop();
   
   name = loadImage("name.png");
   welcome = loadImage("welcome.png");
@@ -117,6 +137,7 @@ void setup(){
   tent1highlight = loadImage("tent1highlight.png");
   tent2highlight = loadImage("tent2highlight.png");
   tent3highlight = loadImage("tent3highlight.png");
+  prizehighlight = loadImage("prizehighlight.png");
 
   wheel = loadImage("wheel.png");
   prize = loadImage("prize.png");
@@ -134,6 +155,11 @@ void setup(){
   instructions = loadImage("instructions.png");
   instructions1 = loadImage("striker instructions.png");
   bottle_background = loadImage("bottle background.png");
+  bottle_instructions = loadImage("bottle instructions.png");
+  dart_instructions = loadImage("dart instructions.png");
+  darterror = loadImage("darterror.png");
+  cart = loadImage("cart.png");
+  cartticket = loadImage("cartticket.png");
   
   prize_background = loadImage("prize_background.png");
   selectbear = loadImage("selectbear.png");
@@ -308,7 +334,8 @@ void draw(){
       moveVideo +=20;
       moveText +=20;
       moveBackground +=20;
-    }  
+    }
+  
   if (state == "setting" && mouseX >=moveTent && mouseX<=moveTent+390 && mouseY >=180 && mouseY<=180+420){
       image(tent1highlight, moveBackground, -100, width*3, height+100);
       fill(0);
@@ -353,7 +380,44 @@ void draw(){
       image(video, 1050, 0, 150, 100);
       fill(0);
       text(object, 1100, 120);
-    }  
+    } 
+  if (state == "setting" && mouseX >=movePrize && mouseX<=movePrize+380 && mouseY >=250 && mouseY<=250+400){
+      image(prizehighlight, moveBackground, -100, width*3, height+100);
+      fill(0);
+      textSize(40);
+      text("Tickets: " + tickets, 150, 50);
+      frame = (frame+1)%numFrames; 
+      image(ferris[frame], moveWheel, 60, 420+50, 500+100);
+      fill(255);
+      triangle(50, 635, 90, 620, 90, 660);
+      triangle(1130, 635, 1090, 620, 1090, 660);
+      textSize(20);
+      image(video, 1050, 0, 150, 100);
+      fill(0);
+      text(object, 1100, 120);
+    }     
+  }
+  if (state== "cart"){
+    background(#B6E3EE);
+    image(cart, 218.5, 53.7, 763, 593);
+    image(video, 510, 230, 200, 180);
+    fill(255);
+    rect(40,530,200,50);
+    textSize(40);
+    fill(0);
+    text("back", 140,567);
+  }
+  if (state == "cartticket"){
+    background(#B6E3EE);
+    image(cart, 218.5, 53.7, 763, 593);
+    image(video, 510, 230, 200, 180);
+    image(cartticket, 122, 204, 956, 292);
+    
+    fill(255);
+    rect(40,530,200,50);
+    textSize(40);
+    fill(0);
+    text("back", 140,567);
   }
   if (state == "highstriker_instructions"){
     background(255);
@@ -395,6 +459,7 @@ void draw(){
     image(prize_background, 0,0,1200,700);
     fill(255);
     rect(40,530,200,50);
+    textSize(40);
     fill(0);
     text("back", 140,567);
     if (state == "prize" && mouseX>100 && mouseX<100+250 && mouseY>45 && mouseY<45+230){
@@ -433,7 +498,10 @@ void draw(){
       text("back", 140,567);
     }
   }
-  
+  if (state == "dart_instructions"){
+    background(255);
+    image(dart_instructions, 226, 100, 748,598);
+  }
   if (state == "dart"){
     background(#92E0ED);
     fill(#92E0ED);
@@ -477,15 +545,16 @@ void draw(){
     triangle(x4+73, y4-30, x4+73, y4-50, x4+90, y4-40);
     triangle(x5+73, y5-30, x5+73, y5-50, x5+90, y5-40);
     triangle(x6+73, y6-30, x6+73, y6-50, x6+90, y6-40);
-    image(video, x1+30,y1-60,50,50);
-    image(video1, x2+30,y2-60,50,50);
-    image(video, x3+30,y3-60,50,50);
-    image(video1, x4+30,y4-60,50,50);
-    image(video, x5+30,y5-60,50,50);
-    image(video1, x6+30,y6-60,50,50);
+    image(video, x1+30-5,y1-60-5,50,50);
+    image(video1, x2+30-5,y2-60-5,50,50);
+    image(video, x3+30-5,y3-60-5,50,50);
+    image(video1, x4+30-5,y4-60-5,50,50);
+    image(video, x5+30-5,y5-60-5,50,50);
+    image(video1, x6+30-5,y6-60-5,50,50);
     
     fill(255);
     rect(40,530,200,50);
+    textSize(40);
     fill(0);
     text("back", 140,567);
     
@@ -494,68 +563,103 @@ void draw(){
       }
       else {
          x1++;
-         //r++;
-         if (state == "dart" && count == 0 && mousePressed == true && mouseX >= x1-50 && mouseX<=x1-50+100 && mouseY>=y1-50 && mouseY<=y1-50+100){
-          tickets+=ticket1;
-          count=1;
-          }
        }
       if (state == "dart" && x2>width+100){
         x2 =-100;      
       }
       else {
          x2++;
-         //r++;
-         if ( state == "dart" && count == 0 && mousePressed == true && mouseX >= x2-50 && mouseX<=x2-50+100 && mouseY>=y2-50 && mouseY<=y2-50+100){
-          tickets+=ticket2;
-          count=1;
-          }
        }
      if (state == "dart" && x3>width+100){
         x3 =-100;      
       }
       else {
-         x3++;
-         //r++;
-         if (state == "dart" && count == 0 && mousePressed == true && mouseX >= x3-50 && mouseX<=x3-50+100 && mouseY>=y3-50 && mouseY<=y3-50+100){
-          tickets+=ticket3;
-          count=1;
-          }
+         x3++;         
        }
      if (state == "dart" && x4>width+100){
         x4 =-100;      
       }
       else {
-         x4++;
-         //r++;
-         if (state == "dart" && count == 0 && mousePressed == true && mouseX >= x4-50 && mouseX<=x4-50+100 && mouseY>=y4-50 && mouseY<=y4-50+100){
-          tickets+=ticket4;
-          count=1;
-          }
+         x4++;         
        }
      if (state == "dart" && x5>width+100){
         x5 =-100;      
       }
       else {
          x5++;
-         //r++;
-         if (state == "dart" && count == 0 && mousePressed == true && mouseX >= x5-50 && mouseX<=x5-50+100 && mouseY>=y5-50 && mouseY<=y5-50+100){
-          tickets+=ticket5;
-          count=1;
-          }
+         
        }
       if (state == "dart" && x6>width+100){
         x6 =-100;      
       }
       else {
          x6++;
-         //r++;
-         if (state == "dart" && count == 0 && mousePressed == true && mouseX >= x6-50 && mouseX<=x6-50+100 && mouseY>=y6-50 && mouseY<=y6-50+100){
-          tickets+=ticket6;
-          count=1;
-          }
+         
        }
-       text(str(tickets),100,100);
+  }
+  if (state == "ticket1"){
+        fill(#F1FF5D);
+        rect(250,150,700,200);
+        fill(0);
+        textSize(50);
+        text("You won     tickets", width/2, 240);
+        text(ticket1, 621, 240);  
+        text("You have     tries left", width/2, 290);
+        text(str(3-count), 621, 290);
+          }       
+      if (state == "ticket2"){
+          fill(#F1FF5D);
+          rect(250,150,700,200);
+          fill(0);
+          textSize(50);
+          text("You won     tickets", width/2, 240);
+          text(ticket2, 621, 240);
+          text("You have     tries left", width/2, 290);
+          text(str(3-count), 621, 290);
+          }
+      if (state == "ticket3"){
+          fill(#F1FF5D);
+          rect(250,150,700,200);
+          fill(0);
+          textSize(50);
+          text("You won     tickets", width/2, 240);
+          text(ticket3, 621, 240);
+          text("You have     tries left", width/2, 290);
+          text(str(3-count), 621, 290);
+          }
+   if (state == "ticket4"){
+          fill(#F1FF5D);
+          rect(250,150,700,200);
+          fill(0);
+          textSize(50);
+          text("You won     tickets", width/2, 240);
+          text(ticket4, 621, 240);
+          text("You have     tries left", width/2, 290);
+          text(str(3-count), 621, 290);
+          }
+   if (state == "ticket5"){
+          fill(#F1FF5D);
+          rect(250,150,700,200);
+          fill(0);
+          textSize(50);
+          text("You won     tickets", width/2, 240);
+          text(ticket5, 621, 240);
+          text("You have     tries left", width/2, 290);
+          text(str(3-count), 621, 290);
+          }
+   if (state == "ticket6"){
+          fill(#F1FF5D);
+          rect(250,150,700,200);
+          fill(0);
+          textSize(50);
+          text("You won     tickets", width/2, 240);
+          text(ticket6, 621, 240);
+          text("You have     tries left", width/2, 290);
+          text(str(3-count), 621, 290);
+          }
+  if (state == "bottle_instructions"){
+    background(255);
+    image(bottle_instructions, 226, 100, 748,598);
   }
   if (state == "bottle"){
     background(bottle_background);
@@ -564,6 +668,7 @@ void draw(){
     text(str(shots), 955, 155);
     fill(255);
     rect(40,530,200,50);
+    textSize(40);
     fill(0);
     text("back", 140,567);
     
@@ -596,7 +701,7 @@ void draw(){
     rect(390, 540-210, 30, 100, 10, 10, 0, 0);
     rect(400, 540-230, 10, 20, 10, 10, 0, 0);
     image(video, 400-45, 540-230+30, 100,80);
-    if (colors3 == 255){
+    if (colors4 == 255){
       image(video1, 400-45, 540-230+30, 100,80);
     }
     fill(colors7);
@@ -623,29 +728,31 @@ void draw(){
       rect(pmouseX-25, pmouseY, 50, 200);
     }
     
-    if (shots>0 && mousePressed == true && mouseX>=305+290-10 && mouseX<=305+290+30 && pmouseY>=500 && pmouseY<=550 && colors!=255){
+    if (shots>0 && mousePressed == true && mouseX>=595-5 && mouseX<=626+5 && pmouseY>=500 && pmouseY<=550 && colors!=255){
       //top row      
       colors = colors+255;
       bottle_tickets += 10;
     }
-    else if (shots>0 && mousePressed == true && mouseX>=540-10 && mouseX<=540+30 && pmouseY>550 && pmouseY<=600 && colors2!=255){
+    else if (shots>0 && mousePressed == true && mouseX>=531-5 && mouseX<=561+5 && mouseY>550 && mouseY<=600 && colors2!=255){
      //second row
       colors2= colors2+255;   
       bottle_tickets +=5;
     }
-    else if (shots>0 && mousePressed == true && mouseX>=575+90-10 && mouseX<=575+90+30 && pmouseY>550 && pmouseY<=600 && colors3!=255){
+    else if (shots>0 && mousePressed == true && mouseX>=655-5 && mouseX<=687+5 && mouseY>550 && mouseY<=600 && colors3!=255){
       colors3+=255;  
       bottle_tickets +=5;
     }
-    else if(shots>0 && mousePressed == true && mouseX>=400-10 && mouseX<=400+30 && pmouseY>600 && pmouseY<=650 && colors4!=255){
+    else if(shots>0 && mousePressed == true && mouseX>=391-5 && mouseX<=423+5 && mouseY>600 && mouseY<=650 && colors4!=255){
       colors4+=255;   
       bottle_tickets +=3;
     }
     
-    else if (shots>0 && mousePressed == true && mouseX>=800-10 && mouseX<=800+30 && pmouseY>600 && pmouseY<=650 && colors7!=255){
+    else if (shots>0 && mousePressed == true && mouseX>=790-5 && mouseX<=822+5 && mouseY>600 && mouseY<=650 && colors7!=255){
       colors7+=255;   
       bottle_tickets+=3;
     }
+    println(mouseX);
+
   }
   if (state == "end of bottle"){
     background(bottle_background);
@@ -658,6 +765,7 @@ void draw(){
     fill(255);
     rect(40,530,200,50);
     fill(0);
+    textSize(40);
     text("back", 140,567);
   }
   if (state == "error"){
@@ -678,6 +786,10 @@ void draw(){
   if (state == "duck"){
     image(duck, 122, 204, 956, 292);
   }
+  if (state =="darterror"){
+    image(darterror,122, 204, 956, 292);
+  }
+  
 }
 void striker(){
   background(striker_background);
@@ -701,6 +813,7 @@ void striker(){
   fill(255);
   rect(40,530,200,50);
   fill(0);
+  textSize(40);
   text("back", 140,567);
 }
 
@@ -732,7 +845,6 @@ void mousePressed(){
   else if (state == "instructions" && mouseX>=270 && mouseX<=270+300 && mouseY>=500 && mouseY<=500+100){
     state = "setting";
   }
-
   else if (state == "setting" && mouseX >=moveTent && mouseX<=moveTent+390 && mouseY >=180 && mouseY<=180+420){
     state = "highstriker_instructions"; 
     
@@ -771,6 +883,9 @@ void mousePressed(){
   else if (state == "hit" && mouseX >=40 && mouseX<=40+200 && mouseY >=530 && mouseY<=530+50){
     state = "setting";
     start = 450;
+  }
+  else if(state == "setting" && tickets <10 &&  mouseX>=moveWheel && mouseX<=moveWheel+420+50 && mouseY>= 60 && mouseY<= 60+20+50+500+100){
+    state="cart";
   }
   else if (state == "setting" && mouseX >=movePrize && mouseX<=movePrize+380 && mouseY >=250 && mouseY<=250+400){
     state = "prize";
@@ -811,13 +926,92 @@ void mousePressed(){
   else if (state == "prize" && mouseX >=100 && mouseX<=100+100 && mouseY >=500 && mouseY<=500+100){
     state = "setting";
   }
-  else if (state == "setting" && mouseX >=moveTent1 && mouseX<=moveTent1+350 && mouseY >=180 && mouseY<=180+420){
-    state = "bottle";    
+  else if (state == "bear" || state == "squid" || state=="ball" || state=="duck" || state=="paddle"){
+    state = "photostrip";
   }
-  else if (state == "setting" && mouseX >=moveTent2 && mouseX<=moveTent2+360 && mouseY >=180 && mouseY<=180+420){
-    state ="dart";
+   else if (state == "photostrip"){
+    object ="";
+    state = "pregame";
+    count = 0;    
   }
-  else if (state =="dart" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+  if (state == "setting" && mouseX >=moveTent1 && mouseX<=moveTent1+350 && mouseY >=180 && mouseY<=180+420){
+    state = "bottle_instructions";    
+  }
+  else if (state == "bottle_instructions"){
+    state = "bottle";
+  }
+  if (state == "setting" && count <= 2 && count>=0 && mouseX >=moveTent2 && mouseX<=moveTent2+360 && mouseY >=180 && mouseY<=180+420){
+    state ="dart_instructions";
+  }
+  else if (state == "dart_instructions"){
+    state = "dart";    
+  }
+  if (state == "dart" && count <= 2 && count>=0 && mouseX >= x1-50 && mouseX<=x1-50+100 && mouseY>=y1-50 && mouseY<=y1-50+100){
+          tickets+=ticket1;
+          count+=1;
+          state = "ticket1";
+          }       
+  else if (state == "dart" && count <= 2 && count>=0 && mousePressed == true && mouseX >= x2-50 && mouseX<=x2-50+100 && mouseY>=y2-50 && mouseY<=y2-50+100){
+          tickets+=ticket2;
+          count+=1;
+          state = "ticket2";
+          }
+   else if (state == "dart" && count <= 2 && count>=0 && mousePressed == true && mouseX >= x3-50 && mouseX<=x3-50+100 && mouseY>=y3-50 && mouseY<=y3-50+100){
+          tickets+=ticket3;
+          count+=1;
+          state = "ticket3";
+          }
+   else if (state == "dart" && count <= 2 && count>=0 && mousePressed == true && mouseX >= x4-50 && mouseX<=x4-50+100 && mouseY>=y4-50 && mouseY<=y4-50+100){
+          tickets+=ticket4;
+          count+=1;
+          state = "ticket4";
+          }
+   else if (state == "dart" && count <= 2 && count>=0 && mousePressed == true && mouseX >= x5-50 && mouseX<=x5-50+100 && mouseY>=y5-50 && mouseY<=y5-50+100){
+          tickets+=ticket5;
+          count+=1;
+          state = "ticket5";
+          }
+   else if (state == "dart" && count <= 2 && count>=0 && mousePressed == true && mouseX >= x6-50 && mouseX<=x6-50+100 && mouseY>=y6-50 && mouseY<=y6-50+100){
+          tickets+=ticket6;
+          count+=1;
+          state = "ticket6";
+          }
+   else if (state == "dart" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+    state = "setting";
+  } 
+  if (state == "cart" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+    state="setting";
+  }
+  if (state == "setting" && tickets >= 10 && mouseX>=moveWheel && mouseX<=moveWheel+420+50 && mouseY>= 60 && mouseY<= 60+20+50+500+100){
+    state="cartticket";
+    tickets -=10;
+  } 
+  if (state == "cartticket" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+    state="setting";
+  }
+  
+  if (state == "setting" && count == 3 && mouseX >=moveTent2 && mouseX<=moveTent2+360 && mouseY >=180 && mouseY<=180+420){
+      state="darterror";
+   }
+  else if (state =="darterror"){
+    state="setting";
+  }
+   if (state =="ticket1" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+    state = "setting";
+  }
+   if (state =="ticket2" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+    state = "setting";
+  }
+  if (state =="ticket3" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+    state = "setting";
+  }
+  if (state =="ticket4" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+    state = "setting";
+  }
+  if (state =="ticket5" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+    state = "setting";
+  }
+  if (state =="ticket6" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
     state = "setting";
   }
   else if (state =="bottle"){
@@ -848,23 +1042,18 @@ void mousePressed(){
     }
     if (state == "bottle" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
       state ="setting";
+      count = 6;
   }
   }
-
   else if (state == "end of bottle" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
     state = "setting";
-    shots = 5;
+    shots = 6;
     bottle_tickets = 0;
     colors = 0;
     colors2 = 0;
     colors3= 0;
     colors4 = 0;
     colors7 = 0;
-  }  
-  else if (state == "bear" || state == "squid" || state=="ball" || state=="duck" || state=="paddle"){
-    state = "photostrip";
   }
-  else if (state == "photostrip"){
-    state = "pregame";
-  }
+  println(state);
 }
