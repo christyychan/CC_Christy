@@ -1,17 +1,26 @@
 import processing.video.*;
+PImage name;
 PImage welcome;
 PImage photobooth;
 PImage photobooth2;
 PImage photostrip;
+PImage instructions;
+PImage instructions1;
 PImage smile;
 PImage frown;
-PImage curtain1;
+PImage curtain1; 
 PImage curtain2;
 PImage wheel;
 PImage prize;
 PImage hammer;
 PImage hammer1;
+PImage striker_background;
 PImage bell;
+PImage weak;
+PImage okay;
+PImage mediocre;
+PImage somewhat_strong;
+PImage winner;
 PImage background;
 PImage prize_background;
 PImage selectbear;
@@ -26,12 +35,17 @@ int moveTent1 = -600;
 int moveTent2 = -1050;
 int moveWheel = 400;
 int movePrize = 990;
+int moveVideo = 1050;
+int moveText = 1100;
 int start = 450;
 int tickets = 0;
 int moveBackground = -1200;
 String object = "";
 
+int moveStriker = 200;
+
 int shots = 5;
+int moveBall = 400;
 int bottle_tickets = 0;
 int colors = 0;
 int colors2 = 0;
@@ -79,9 +93,10 @@ void setup(){
   video1 = new Capture(this, 720, 500);
   video1.start();
   
+  name = loadImage("name.png");
   welcome = loadImage("welcome.png");
   photobooth = loadImage("photobooth.png");
-  photobooth2 = loadImage("photobooth2.png");
+  photobooth2 = loadImage("photobooth2_1.png");
   photostrip = loadImage("photostrip.png");
   smile = loadImage("smile.png");
   frown = loadImage("frown.png");
@@ -93,8 +108,16 @@ void setup(){
   //person = loadImage("person.png");
   hammer = loadImage("hammer.png");
   hammer1 = loadImage("hammer copy.png");
+  striker_background = loadImage("striker background.png");
   bell = loadImage("bell.png");
+  weak = loadImage("weak.png");
+  okay = loadImage("okay.png");
+  mediocre = loadImage("mediocre.png");
+  somewhat_strong = loadImage("somewhat strong.png");
+  winner = loadImage("winner.png");
   background = loadImage("background_1.png");
+  instructions = loadImage("instructions.png");
+  instructions1 = loadImage("instructions1.png");
   
   prize_background = loadImage("prize_background.png");
   selectbear = loadImage("selectbear.png");
@@ -138,11 +161,11 @@ void setup(){
 
 void draw(){
   if (state=="pregame"){
-    background(#E0F3FF);
+    image(name, 0,0,1200,700);
     textAlign(CENTER);
     textSize(50);
     fill(0);
-    text("Type in your name", width/2, 100);
+    text("Type in your name", width/2, 200);
     fill(0);
     text(object, width/2, 300);    
     rect(450, 500, 300, 100);
@@ -155,7 +178,9 @@ void draw(){
     textSize(100);
     text(object, 530, 360);
     rect(450, 500, 300, 100);
-    
+    fill(255);
+    textSize(50);
+    text("Continue", 600, 570);
   }
   if (state == "picture"){
     noStroke();
@@ -167,15 +192,16 @@ void draw(){
     rect(470, 500, 300, 250);
     image(curtain1, 0, 0, 420, 700);
     image(curtain2, 780, 0, 420, 700);
-    image(smile, 550, 300, 100,100);
+    image(smile, 500, 159, 182,317);
     stroke(1);
     fill(0);
-    rect(450, 500, 300, 100);
+    rect(450, 550, 300, 100);
+    fill(255);
+    text("Take", 600, 620);
   }
   if (state == "picture1"){
     noStroke();
-    background(255);
-    
+    background(255);   
     image(video1,230,150);
     fill(255);
     rect(230, 150, 720/3,500);
@@ -184,11 +210,12 @@ void draw(){
     //image(curtain1, 0, 0, 420, 700);
     //image(curtain2, 780, 0, 420, 700);
     image(photobooth2, 0,0,1200,700);
-    image(frown, 550, 300, 100,100);
-    
+    image(frown, 500, 159, 182, 317);
     stroke(1);
     fill(0);
-    rect(450, 500, 300, 100);
+    rect(450, 550, 300, 100);
+    fill(255);
+    text("Take", 600, 620);
   }
   if (state == "photostrip"){
     image(photostrip, 0,0,1200,700);
@@ -196,9 +223,11 @@ void draw(){
     image(video, 250,450,250,200);
   }
   if (state == "instructions"){
-    background(#E0F3FF);
-    text("Instructions", width/2, 100);
-    rect(450, 500, 300, 100);
+    image(instructions, 0, 0, 1200, 700);
+    fill(0);
+    rect(270, 500, 300, 100);
+    fill(255);
+    text("Play", 420, 570);
   }
   if (state == "setting"){
     image(background, moveBackground, -100, width*3, height+100);
@@ -210,14 +239,19 @@ void draw(){
     fill(255);
     triangle(50, 635, 90, 620, 90, 660);
     triangle(1130, 635, 1090, 620, 1090, 660);
+    textSize(20);
+    image(video, 1050, 0, 150, 100);
+    fill(0);
+    text(object, 1100, 120);
     
-    
-    if (movePrize <= 100){
+    if (movePrize <= 70){
       moveTent -=0;
       moveTent1 -=0;
       moveTent2 -=0;
       moveWheel -=0;
       movePrize -=0;
+      moveVideo -=0;
+      moveText -=0;
       moveBackground -=0;
   }
     else if(mouseX >= 1000){
@@ -226,6 +260,8 @@ void draw(){
       moveTent2 -=20;
       moveWheel -=20;
       movePrize -=20;
+      moveVideo -=20;
+      moveText -=20;
       moveBackground -=20;
     }
     if (moveTent1 >=700){
@@ -234,6 +270,8 @@ void draw(){
       moveTent2 -=0;
       moveWheel -=0;
       movePrize -=0;
+      moveVideo -=0;
+      moveText -=0;
       moveBackground -=0;
     }
     else if (mouseX <=200){
@@ -242,12 +280,19 @@ void draw(){
       moveTent2+=20;
       moveWheel +=20;
       movePrize +=20;
+      moveVideo +=20;
+      moveText +=20;
       moveBackground +=20;
     }  
   }
+  if (state == "highstriker_instructions"){
+    background(255);
+    image(instructions1, 226, 100, 748,598);
+  }
   if (state == "highstriker"){
+    textSize(40);
     striker();
-    image(hammer,400, mouseY-100, 200, 200);
+    image(hammer,450, mouseY-100, 200, 200);
   }
   if (state == "hit"){
     background(255);
@@ -255,29 +300,25 @@ void draw(){
     image(hammer1, 450, 350, 300, 300);
     
     if(start <=100){
-      fill(random(0,255), random(0,255), random(0,255));
-      textSize(60);
-      text("WINNER", width/2, height/2);
+      image(winner, 270, moveStriker, 727, 211);
     }
     if(start >100 && start<=200){
-      fill(random(0,255), 0, 0);
-      textSize(50);
-      text("Somewhat Strong", width/2, height/2);
+      image(somewhat_strong, 270, moveStriker, 727, 211);
     }
     if(start >200 && start<=300){
-      fill(0, random(0,255), 0);
-      textSize(50);
-      text("Mediocre", width/2, height/2);
+      image(mediocre, 270, moveStriker, 727, 211);
     }
     if(start >300 && start<=400){
-      fill(0,0,random(0,255));
-      textSize(50);
-      text("Okay", width/2, height/2);
+      image(okay, 270, moveStriker, 727, 211);
     }
     if(start >400){
-      fill(random(0,255));
-      textSize(50);
-      text("Weak", width/2, height/2);
+      image(weak, 270, moveStriker, 727, 211);
+    }
+    if (moveStriker >=height+100){
+      moveStriker =0;
+    }
+    else{
+      moveStriker+=10;
     }
   }
   if (state == "prize"){
@@ -451,33 +492,44 @@ void draw(){
     textSize(50);
     fill(0);
     text(str(shots), 50,100);
+    fill(255);
+    rect(40,530,200,50);
+    fill(0);
+    text("back", 140,567);
+    ellipse(mouseX-25, moveBall, 20, 20);
     //top row
     fill(colors);    
     rect(315+290, 70-20, 10, 20, 10, 10, 0,0);
     rect(305+290, 70,30,100,10,10,0,0);
     image(video, 315+250, 80, 100, 80);
+    if (colors == 255){
+      image(video1, 315+250, 80, 100, 80);
+    }
     
     //second row
     fill(colors2);
     rect(410+120, 340-150, 30, 100, 10, 10, 0, 0);
-    rect(540, 340-170, 10, 20, 10, 10, 0, 0);     
+    rect(540, 340-170, 10, 20, 10, 10, 0, 0); 
+    if (colors2 == 255){
+      image(video1, 315+250, 80, 100, 80);
+    }
     fill(colors3);
     rect(575+80, 340-150, 30, 100, 10, 10, 0, 0);
     rect(575+90, 340-170, 10, 40, 10, 10, 0, 0);
-    
+    image(video, 410+85, 340-170+30, 100, 80);
+    image(video, 540+85, 340-170+30, 100, 80);
+    if (colors3 == 255){
+      image(video1, 315+250, 80, 100, 80);
+    }
     //third row
     fill(colors4);
     rect(390, 540-210, 30, 100, 10, 10, 0, 0);
     rect(400, 540-230, 10, 20, 10, 10, 0, 0);
-    //fill(colors5);
-    //rect(530, 540-210, 30, 100, 10, 10, 0, 0); 
-    //rect(410+130, 540-230, 10, 20, 10, 10, 0, 0);
-    //fill(colors6);
-    //rect(650, 540-210, 30, 100, 10, 10, 0, 0);
-    //rect(660, 540-230, 10, 20, 10, 10, 0, 0);
+    image(video, 400-45, 540-230+30, 100,80);
     fill(colors7);
     rect(790, 540-210, 30, 100, 10, 10, 0, 0);
     rect(800, 540-230, 10, 20, 10, 10, 0, 0);
+    image(video, 800-45, 540-230+30, 100,80);
     
     fill(255);
     rect(mouseX-25, 400, 50, 200);
@@ -520,29 +572,36 @@ void draw(){
     text(bottle_tickets, width/2, height/2);
     rect(100,100,50,50);
     rect(200,100,50,50);
+    fill(255);
+    rect(40,530,200,50);
+    fill(0);
+    text("back", 140,567);
   }
   
 }
 void striker(){
-  background(255);
+  background(striker_background);
   fill(244, 238, 66);
-  rect(500, 50, 100, 450);
+  rect(570, 50, 100, 450);
   fill(255, 0, 0);
-  rect(500, 450, 100, 130);
+  rect(570, 450, 100, 130);
   fill(0);
-  ellipse(550, 530, 100, 50);
-  rect(500, 500, 100, 30);
+  ellipse(620, 530, 100, 50);
+  rect(570, 500, 100, 30);
   fill(173, 171, 171);
-  ellipse(550, 500, 100, 50);
+  ellipse(620, 500, 100, 50);
   fill(0);
-  ellipse(553, start, 20, 20);
+  ellipse(623, start, 20, 20);
   textSize(20);
-  text("400", 450, 110);
-  text("300", 450, 210);
-  text("200", 450, 310);
-  text("100", 450, 410);
-  image(bell, 423, -70, 250, 250);
-  rect(100, 100, 100, 100);
+  text("400", 520, 110);
+  text("300", 520, 210);
+  text("200", 520, 310);
+  text("100", 520, 410);
+  image(bell, 493, -70, 250, 250);
+  fill(255);
+  rect(40,530,200,50);
+  fill(0);
+  text("back", 140,567);
 }
 
 void keyPressed(){
@@ -559,26 +618,28 @@ void mousePressed(){
   else if (state == "welcome" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
     state = "picture";
   }
-  else if (state == "picture" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
+  else if (state == "picture" && mouseX>=450 && mouseX<=450+300 && mouseY>=550 && mouseY<=550+100){
     video.stop();
     state = "picture1";
   }
-  else if (state == "picture1" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
+  else if (state == "picture1" && mouseX>=450 && mouseX<=450+300 && mouseY>=550 && mouseY<=550+100){
     video1.stop();
-    state = "photostrip";
-  }
-  else if (state == "photostrip" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
-    
     state = "instructions";
   }
-  else if (state == "instructions" && mouseX>=450 && mouseX<=450+300 && mouseY>=500 && mouseY<=500+100){
+  
+  else if (state == "instructions" && mouseX>=270 && mouseX<=270+300 && mouseY>=500 && mouseY<=500+100){
     state = "setting";
   }
+
   else if (state == "setting" && mouseX >=moveTent && mouseX<=moveTent+390 && mouseY >=180 && mouseY<=180+420){
+    state = "highstriker_instructions"; 
+    
+  }
+  else if (state == "highstriker_instructions"){
     state = "highstriker"; 
     
   }
-  else if (state == "highstriker" && mouseX >=100 && mouseX<=100+100 && mouseY >=100 && mouseY<=100+100){
+  else if (state == "highstriker" && mouseX >=40 && mouseX<=40+200 && mouseY >=530 && mouseY<=530+50){
     state = "setting";
     start = 450;
   }
@@ -601,7 +662,7 @@ void mousePressed(){
       tickets+=10;
     }
   }
-  else if (state == "hit" && mouseX >=100 && mouseX<=100+100 && mouseY >=100 && mouseY<=100+100){
+  else if (state == "hit" && mouseX >=40 && mouseX<=40+200 && mouseY >=530 && mouseY<=530+50){
     state = "setting";
     start = 450;
   }
@@ -626,8 +687,14 @@ void mousePressed(){
     if (state == "bottle" && shots == 0){
       state= "end of bottle";
       tickets += bottle_tickets;
+      shots = 5;
+      colors = 0;
+      colors2 = 0;
+      colors3= 0;
+      colors4 = 0;
+      colors7 = 0;
       
-  }
+    }
   }
   else if (state == "end of bottle" && mouseX>=100 && mouseX<=100+50 && mouseY>=100 && mouseY<=100+50){
     state = "bottle";
