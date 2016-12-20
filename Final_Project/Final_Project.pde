@@ -295,7 +295,7 @@ void draw(){
     fill(0);
     text(object, 1100, 120);
     
-    if (movePrize <= 70){
+    if (movePrize <= 80){
       moveTent -=0;
       moveTent1 -=0;
       moveTent2 -=0;
@@ -751,7 +751,7 @@ void draw(){
       colors7+=255;   
       bottle_tickets+=3;
     }
-    println(mouseX);
+    
 
   }
   if (state == "end of bottle"){
@@ -840,23 +840,17 @@ void mousePressed(){
   else if (state == "picture1" && mouseX>=450 && mouseX<=450+300 && mouseY>=550 && mouseY<=550+100){
     video1.stop();
     state = "instructions";
-  }
-  
+  }  
   else if (state == "instructions" && mouseX>=270 && mouseX<=270+300 && mouseY>=500 && mouseY<=500+100){
     state = "setting";
   }
-  else if (state == "setting" && mouseX >=moveTent && mouseX<=moveTent+390 && mouseY >=180 && mouseY<=180+420){
-    state = "highstriker_instructions"; 
-    
+  if (state == "setting" && mouseX >=moveTent && mouseX<=moveTent+390 && mouseY >=180 && mouseY<=180+420){
+    state = "highstriker_instructions";     
   }
   else if (state == "highstriker_instructions"){
-    state = "highstriker"; 
-    
+    state = "highstriker";     
   }
-  else if (state == "highstriker" && mouseX >=40 && mouseX<=40+200 && mouseY >=530 && mouseY<=530+50){
-    state = "setting";
-    start = 450;
-  }
+  
   else if (state == "highstriker"){
     state = "hit";
     if (mouseY<=100){
@@ -878,16 +872,25 @@ void mousePressed(){
     else if (mouseY>400){
       start = mouseY;
       tickets+=10;
-    }
-  }
-  else if (state == "hit" && mouseX >=40 && mouseX<=40+200 && mouseY >=530 && mouseY<=530+50){
+    }  
+    else if (state == "hit" && mouseX >=40 && mouseX<=40+200 && mouseY >=530 && mouseY<=530+50){
     state = "setting";
     start = 450;
   }
-  else if(state == "setting" && tickets <10 &&  mouseX>=moveWheel && mouseX<=moveWheel+420+50 && mouseY>= 60 && mouseY<= 60+20+50+500+100){
+  }
+  
+  if (state == "highstriker" && mouseX >=40 && mouseX<=40+200 && mouseY >=530 && mouseY<=530+50){
+    state = "setting";
+    start = 450;
+  }
+  if (state == "hit" && mouseX >=40 && mouseX<=40+200 && mouseY >=530 && mouseY<=530+50){
+    state = "setting";
+    start = 450;
+  }
+  if(state == "setting" && tickets <10 && mouseX>=moveWheel && mouseX<=moveWheel+420+50 && mouseY>= 60 && mouseY<= 60+20+50+500+100){
     state="cart";
   }
-  else if (state == "setting" && mouseX >=movePrize && mouseX<=movePrize+380 && mouseY >=250 && mouseY<=250+400){
+  if (state == "setting" && mouseX >=movePrize && mouseX<=movePrize+380 && mouseY >=250 && mouseY<=250+400){
     state = "prize";
   }
   else if (state == "prize" && tickets >= 350 && mouseX>100 && mouseX<100+250 && mouseY>45 && mouseY<45+230){
@@ -929,16 +932,10 @@ void mousePressed(){
   else if (state == "bear" || state == "squid" || state=="ball" || state=="duck" || state=="paddle"){
     state = "photostrip";
   }
-   else if (state == "photostrip"){
+  else if (state == "photostrip"){
     object ="";
     state = "pregame";
     count = 0;    
-  }
-  if (state == "setting" && mouseX >=moveTent1 && mouseX<=moveTent1+350 && mouseY >=180 && mouseY<=180+420){
-    state = "bottle_instructions";    
-  }
-  else if (state == "bottle_instructions"){
-    state = "bottle";
   }
   if (state == "setting" && count <= 2 && count>=0 && mouseX >=moveTent2 && mouseX<=moveTent2+360 && mouseY >=180 && mouseY<=180+420){
     state ="dart_instructions";
@@ -946,7 +943,7 @@ void mousePressed(){
   else if (state == "dart_instructions"){
     state = "dart";    
   }
-  if (state == "dart" && count <= 2 && count>=0 && mouseX >= x1-50 && mouseX<=x1-50+100 && mouseY>=y1-50 && mouseY<=y1-50+100){
+  else if (state == "dart" && count <= 2 && count>=0 && mouseX >= x1-50 && mouseX<=x1-50+100 && mouseY>=y1-50 && mouseY<=y1-50+100){
           tickets+=ticket1;
           count+=1;
           state = "ticket1";
@@ -976,9 +973,9 @@ void mousePressed(){
           count+=1;
           state = "ticket6";
           }
-   else if (state == "dart" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
-    state = "setting";
-  } 
+    else if (state == "dart" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+      state = "setting";
+    } 
   if (state == "cart" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
     state="setting";
   }
@@ -988,9 +985,8 @@ void mousePressed(){
   } 
   if (state == "cartticket" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
     state="setting";
-  }
-  
-  if (state == "setting" && count == 3 && mouseX >=moveTent2 && mouseX<=moveTent2+360 && mouseY >=180 && mouseY<=180+420){
+  }  
+  if (state == "setting" && count == 3 && mouseX >=moveTent2 && mouseX<=moveTent2+400 && mouseY >=180 && mouseY<=180+420){
       state="darterror";
    }
   else if (state =="darterror"){
@@ -1014,7 +1010,13 @@ void mousePressed(){
   if (state =="ticket6" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
     state = "setting";
   }
-  else if (state =="bottle"){
+  if (state == "setting" && mouseX >=moveTent1 && mouseX<=moveTent1+350 && mouseY >=180 && mouseY<=180+420){
+    state = "bottle_instructions";    
+  }
+  else if (state == "bottle_instructions"){
+    state = "bottle";
+  }
+  if (state =="bottle"){
     shots -=1;
     if (pmouseY >= 500 && pmouseY<=550){
       moveBall = mouseY - 400;
@@ -1040,9 +1042,14 @@ void mousePressed(){
       moveBall = 485;
       
     }
-    if (state == "bottle" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
+  if(state == "bottle" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
       state ="setting";
-      count = 6;
+      shots = 6;
+      colors = 0;
+      colors2 = 0;
+      colors3= 0;
+      colors4 = 0;
+      colors7 = 0;
   }
   }
   else if (state == "end of bottle" && mouseX>=40 && mouseX<=40+200 && mouseY>=530 && mouseY<=530+50){
@@ -1056,4 +1063,5 @@ void mousePressed(){
     colors7 = 0;
   }
   println(state);
+  println(moveTent2);
 }
